@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<extension point="org.eclipse.ui.startup">
+		<startup class="eclipse.bcp.BcPlugin"/>
+	</extension>
+	
+	<extension point="org.eclipse.ui.preferencePages">
+		<page id="eclipse.bcp.preferences.PrefPage"
+			name="Bracket Checker Plugin" 
+			class="eclipse.bcp.preferences.PrefPage" 
+			category="org.eclipse.ui.preferencePages.Editors" />
+	</extension>
+	
+	<extension point="org.eclipse.core.runtime.preferences">
+		<initializer class="eclipse.bcp.preferences.PrefInitializer" />
+	</extension>
+	
+	<extension id="bcp.problem" point="org.eclipse.core.resources.markers" name="Bracket Problem"> 
+		<persistent value="true"/> 
+		<super type="org.eclipse.core.resources.problemmarker"/> 
+	</extension> 
+	
+</plugin>
