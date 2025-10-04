@@ -14,26 +14,27 @@ public class BcpCore {
 		List<BracketData> bracketList = BcpUtils.toBracketList(content);
 
 		bracketList = removeDirectlyMatchingBrackets(bracketList);
+		bracketList = removeAngleBracketsInsideLambdaExpressions(bracketList);
 
 		for (int x = 0; x < bracketList.size(); x++) {
 			BracketData currentBracket = bracketList.get(x);
 
-			int bracketCounter = 0;
+			int bracketLevel = 0;
 
 			for (int y = x + 1; y < bracketList.size(); y++) {
 				BracketData candidate = bracketList.get(y);
 
 				if (candidate.isOpening() && currentBracket.getWeight() == candidate.getWeight()) {
-					bracketCounter++;
+					bracketLevel++;
 				}
 
 				if (BcpUtils.isBracketMatch(currentBracket.getBracket(), candidate.getBracket())) {
-					if (bracketCounter == 0) {
+					if (bracketLevel == 0) {
 						currentBracket.setProcessed(true);
 						candidate.setProcessed(true);
 						break;
 					} else {
-						bracketCounter--;
+						bracketLevel--;
 					}
 				} else if (currentBracket.getWeight() < candidate.getWeight()) {
 					break;
@@ -66,6 +67,28 @@ public class BcpCore {
 		}
 
 		return new ArrayList<>(stack);
+	}
+
+	public static List<BracketData> removeAngleBracketsInsideLambdaExpressions(List<BracketData> bracketList) {
+		List<BracketData> result = new ArrayList<>();
+		int roundLevel = 0;
+
+		for (BracketData b : bracketList) {
+			char currentBracket = b.getBracket();
+
+			if (BcpUtils.isRoundOpen(currentBracket))
+				roundLevel++;
+			else if (BcpUtils.isRoundClose(currentBracket) && roundLevel > 0)
+				roundLevel--;
+
+			boolean isNotLambdaExpression = roundLevel == 0;
+
+			if (isNotLambdaExpression || BcpUtils.isNotAngleBracket(currentBracket)) {
+				result.add(b);
+			}
+		}
+
+		return result;
 	}
 
 }

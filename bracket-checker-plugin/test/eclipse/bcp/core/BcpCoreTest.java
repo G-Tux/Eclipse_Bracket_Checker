@@ -42,6 +42,13 @@ public class BcpCoreTest {
 	}
 
 	@Test
+	public void testLambdaExpression() {
+		String input = ".filter(x -> (x + 1) * 5 < '2')";
+		errors = BcpCore.findBracketErrors(input);
+		assertTrue(errors.isEmpty());
+	}
+
+	@Test
 	public void testBracketWeight() {
 		String input = "<}><><><><><><{(}><><{)}>";
 		errors = BcpCore.findBracketErrors(input);
@@ -85,7 +92,7 @@ public class BcpCoreTest {
 
 		String inputWithOneIssue = repeated + "]" + repeated;
 
-		Assertions.assertTimeout(Duration.ofMillis(100), () -> {
+		Assertions.assertTimeout(Duration.ofMillis(50), () -> {
 			errors = BcpCore.findBracketErrors(inputWithOneIssue);
 		});
 

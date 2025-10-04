@@ -20,6 +20,18 @@ public class BcpUtils {
 	private static final char ANGLE_OPEN = '<';
 	private static final char ANGLE_CLOSE = '>';
 
+	public static boolean isRoundOpen(char c) {
+		return c == ROUND_OPEN;
+	}
+
+	public static boolean isRoundClose(char c) {
+		return c == ROUND_CLOSE;
+	}
+
+	public static boolean isNotAngleBracket(char c) {
+		return c != ANGLE_OPEN && c != ANGLE_CLOSE;
+	}
+
 	public static boolean isOpeningBracket(char c) {
 		return c == ROUND_OPEN || c == SQUARE_OPEN || c == CURLY_OPEN || c == ANGLE_OPEN;
 	}
