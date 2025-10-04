@@ -2,7 +2,7 @@
 <feature
       id="BracketCheckerFeature"
       label="bracket-checker-feature"
-      version="1.0.0">
+      version="1.1.0">
 
    <description url="http://www.example.com/description">
       This feature provides the Bracket Checker Eclipse plugin, which
@@ -21,6 +21,6 @@ All rights reserved.
 
    <plugin
          id="bracket-checker-plugin"
-         version="0.0.0"/>
+         version="1.1.0"/>
 
 </feature>
